@@ -2,17 +2,15 @@
 
 set -ouex pipefail
 
-dnf config-manager --add-repo "https://download.docker.com/linux/centos/docker-ce.repo" 
- dnf config-manager --set-disabled docker-ce-stable 
- dnf -y --enablerepo docker-ce-stable install \ 
-   docker-ce \ 
-   docker-ce-cli \ 
-   containerd.io \ 
-   docker-buildx-plugin \ 
-   docker-compose-plugin && \ 
+dnf config-manager --add-repo "https://download.docker.com/linux/centos/docker-ce.repo"
+dnf config-manager --set-disabled docker-ce-stable
+dnf -y --enablerepo docker-ce-stable install docker-ce \
+   docker-ce-cli \
+   containerd.io \
+   docker-buildx-plugin \
+   docker-compose-plugin && \
    systemctl enable docker 
-  
-  
+
  dnf -y group install "Virtualization Hypervisor" 
  dnf -y group install "Virtualization Tools"
 
