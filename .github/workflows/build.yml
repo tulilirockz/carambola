@@ -62,13 +62,13 @@ jobs:
             type=sha,enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=pr
           labels: |
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/refs/heads/main/README.md
+            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.MY_IMAGE_NAME }}/refs/heads/main/README.md
             org.opencontainers.image.created=${{ steps.date.outputs.date }}
             org.opencontainers.image.description=${{ env.IMAGE_DESC }}
-            org.opencontainers.image.documentation=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/refs/heads/main/README.md
-            org.opencontainers.image.source=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/blob/main/Containerfile
-            org.opencontainers.image.title=${{ env.IMAGE_NAME }}
-            org.opencontainers.image.url=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+            org.opencontainers.image.documentation=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.MY_IMAGE_NAME }}/refs/heads/main/README.md
+            org.opencontainers.image.source=https://github.com/${{ github.repository_owner }}/${{ env.MY_IMAGE_NAME }}/blob/main/Containerfile
+            org.opencontainers.image.title=${{ env.MY_IMAGE_NAME }}
+            org.opencontainers.image.url=https://github.com/${{ github.repository_owner }}/${{ env.MY_IMAGE_NAME }}
             org.opencontainers.image.vendor=${{ github.repository_owner }}
             org.opencontainers.image.version=latest
             io.artifacthub.package.deprecated=false
@@ -88,7 +88,7 @@ jobs:
             ./Containerfile
           # Postfix image name with -custom to make it a little more descriptive
           # Syntax: https://docs.github.com/en/actions/learn-github-actions/expressions#format
-          image: ${{ env.IMAGE_NAME }}
+          image: ${{ env.MY_IMAGE_NAME }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           oci: false
@@ -109,7 +109,7 @@ jobs:
         id: push
         with:
           registry: ${{ env.IMAGE_REGISTRY }}
-          image: ${{ env.IMAGE_NAME }}
+          image: ${{ env.MY_IMAGE_NAME }}
           tags: ${{ steps.metadata.outputs.tags }}
 
       # This section is optional and only needs to be enabled if you plan on distributing
@@ -123,7 +123,7 @@ jobs:
       - name: Sign container image
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
-          IMAGE_FULL="${{ env.IMAGE_REGISTRY }}/${IMAGE_NAME}"
+          IMAGE_FULL="${{ env.IMAGE_REGISTRY }}/${MY_IMAGE_NAME}"
           for tag in ${{ steps.metadata.outputs.tags }}; do
             cosign sign -y --key env://COSIGN_PRIVATE_KEY $IMAGE_FULL:$tag
           done
