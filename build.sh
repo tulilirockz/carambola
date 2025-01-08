@@ -2,8 +2,19 @@
 
 set -ouex pipefail
 
-dnf -y install centos-release-hyperscale{,-experimental}
-dnf -x microcode_ctl upgrade -y
+dnf config-manager --add-repo "https://download.docker.com/linux/centos/docker-ce.repo" 
+ dnf config-manager --set-disabled docker-ce-stable 
+ dnf -y --enablerepo docker-ce-stable install \ 
+   docker-ce \ 
+   docker-ce-cli \ 
+   containerd.io \ 
+   docker-buildx-plugin \ 
+   docker-compose-plugin && \ 
+   systemctl enable docker 
+  
+  
+ dnf -y group install "Virtualization Hypervisor" 
+ dnf -y group install "Virtualization Tools"
 
 # ZFS Kernel Module
 # Documentation on https://openzfs.github.io/openzfs-docs/Getting%20Started/RHEL-based%20distro/index.html
