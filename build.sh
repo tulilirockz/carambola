@@ -2,19 +2,16 @@
 
 set -ouex pipefail
 
-### Install packages
+dnf -y install centos-release-hyperscale{,-experimental}
+dnf -x microcode_ctl upgrade -y
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
-
-# this installs a package from fedora repos
-dnf install -y tmux 
-
-# this would install a package from rpmfusion
-# rpm-ostree install vlc
-
-#### Example for enabling a System Unit File
-
-systemctl enable podman.socket
+# ZFS Kernel Module
+# Documentation on https://openzfs.github.io/openzfs-docs/Getting%20Started/RHEL-based%20distro/index.html
+# Prefer DKMS installation since it has support for kernels that arent the current EL ones
+# dnf -y install https://zfsonlinux.org/epel/zfs-release-2-3$(rpm --eval "%{dist}").noarch.rpm
+# Kernel needs to be updated to get ZFS support
+# for pkg in kernel kernel-core kernel-modules kernel-modules-core ; do rpm --erase $pkg --nodeps ; done
+# dnf install -y kernel kernel-core kernel-modules{,-core,-extra}
+# dnf -y install kernel-devel # Is also required for building DKMS module
+# dnf -y install zfs
+# echo "zfs" | tee /etc/modules-load.d/zfs.conf
