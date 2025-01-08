@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://github.com/tulilirockz/carambola/blob/main/docs/carambola.png"/>
+    <img src="https://github.com/tulilirockz/carambola/blob/main/docs/carambola-big.png"/>
     <br/>
     <h1>Carambola</h1>
 </div>
