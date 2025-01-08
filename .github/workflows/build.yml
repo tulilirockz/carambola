@@ -1,5 +1,5 @@
 ---
-name: Build a sweet Carambola
+name: Build Carambola
 on:
   pull_request:
     branches:
