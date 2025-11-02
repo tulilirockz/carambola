@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://github.com/tulilirockz/carambola/blob/main/docs/carambola-big.png"/>
+    <img width="200" height="200" src="https://github.com/tulilirockz/carambola/blob/main/docs/carambola-big.png"/>
     <br/>
     <h1>Carambola</h1>
     <a href="https://github.com/tulilirockz/carambola/actions/workflows/build.yml"><img src="https://github.com/tulilirockz/carambola/actions/workflows/build.yml/badge.svg" alt="Build Status" /></a>
